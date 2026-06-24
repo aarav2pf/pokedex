@@ -29,7 +29,7 @@ export function PokeCard(props) {
                 setData(pokemonData)
 
                 cache[selectedPokemon] = pokemonData;
-                localStorage.setItem(JSON.stringify(cache));
+                localStorage.setItem('pokedex', JSON.stringify(cache));
 
             } catch (err) {
                 console.log(err.message);
