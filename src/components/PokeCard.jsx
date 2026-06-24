@@ -1,8 +1,8 @@
-import { useEffect } from "react";
-import { UseEffect } from "react";
+import { useEffect, useState } from "react";
+import { getFullPokedexNumber, getPokedexNumber } from "../utils";
 
 export function PokeCard(props) {
-    const { selelectedPokemon } = props;
+    const { selectedPokemon } = props;
     const [data, setData] = useState(null); 
     const [loading, setLoading] = useState(false);
 
@@ -22,11 +22,12 @@ export function PokeCard(props) {
             setLoading(true);
             try {
                 const baseUrl = 'https://pokeapi.co/api/v2/';
-                const suffix = 'pokemon/' + selectedPokemon;
+                const suffix = 'pokemon/' + getPokedexNumber(selectedPokemon);
                 const final = baseUrl + suffix;
-                const res = await fetch(finalUrl);
+                const res = await fetch(final);
                 const pokemonData = await res.json();
-                setData(pokemonData)
+                setData(pokemonData);
+                console.log(pokemonData);
 
                 cache[selectedPokemon] = pokemonData;
                 localStorage.setItem('pokedex', JSON.stringify(cache));
@@ -40,10 +41,13 @@ export function PokeCard(props) {
 
         fetchPokemonData();
 
-    }, [selelectedPokemon])
+    }, [selectedPokemon])
 
     return (
-        <div>
+        <div className='poke-card'>
+            <div>
+                <h4>#{getFullPokedexNumber(selectedPokemon)}</h4>
+            </div>
 
         </div>
     )
